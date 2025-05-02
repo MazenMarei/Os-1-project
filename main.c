@@ -74,6 +74,7 @@ int main()
               printf("Invalid option. Please try again.\n");
           }
     }
+    
    return 0;
 }
 
@@ -92,22 +93,40 @@ void show_menu()
     printf("Choose an option: ");
 }
 
+
 // Load Command Map
 int load_map(CommandMap map[], const char *filename)
 {
     FILE *file = fopen(filename, "r");
-    if (!file) {
+    if (!file)
+    {
         perror("Cannot open command_map.txt");
         return 0;
     }
 
+    char line[256];
     int count = 0;
-    while (fscanf(file, "%[^=]=%s\n", map[count].dos, map[count].lin) == 2) {
-        count++;
+
+    while (fgets(line, sizeof(line), file))
+    {
+        // Remove trailing newline
+        line[strcspn(line, "\n")] = 0;
+
+        char *dos = strtok(line, "=");
+        char *lin = strtok(NULL, "");  // Get rest of line after '='
+
+        if (dos && lin)
+        {
+            strncpy(map[count].dos, dos, CMD_LEN);
+            strncpy(map[count].lin, lin, CMD_LEN);
+            count++;
+        }
     }
+
     fclose(file);
     return count;
 }
+
 
 // Map Command
 const char* map_command(const char *input, CommandMap map[], int count)
@@ -121,6 +140,7 @@ const char* map_command(const char *input, CommandMap map[], int count)
     }
     return NULL;
 }
+
 
 // Show Manual
 void show_manual(const char *task_name)

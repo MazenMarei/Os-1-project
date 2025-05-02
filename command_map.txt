@@ -1,5 +1,7 @@
+cd=pwd
 dir=ls
 del=rm
 copy=cp
 type=cat
-
+cd..=cd ..
+md=mkdir
