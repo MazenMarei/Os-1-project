@@ -4,6 +4,6 @@
 
 int main()
 {
-  system("ls");
+  system("cd root");
   return 0;
 }

@@ -1,0 +1,5 @@
+dir=ls
+del=rm
+copy=cp
+type=cat
+
