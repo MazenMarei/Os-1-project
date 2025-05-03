@@ -36,7 +36,7 @@ int main()
                 system("clear");
                 while(1)
                 {
-                  printf("root/");
+                  printf("DOSComnand$ ");
                   fgets(input, sizeof(input), stdin);
                   input[strcspn(input, "\n")] = 0;
                   
@@ -129,12 +129,24 @@ int main()
                   const char *linux_cmd = map_command(cmd, map, count);
                   if (linux_cmd) 
                   {
-                      if (doArgsExist)
-                          snprintf(full_command, sizeof(full_command), "%s %s", linux_cmd, args);
+                      if(strcmp(linux_cmd, "cd") == 0)
+                      {
+                         if (chdir(args) != 0) 
+                         {
+                            perror("chdir failed");
+                            return 1;
+                         }
+                      }
                       else
-                          snprintf(full_command, sizeof(full_command), "%s", linux_cmd);
+                      {
+                          if (doArgsExist)
+                            snprintf(full_command, sizeof(full_command), "%s %s", linux_cmd, args);
+                          else
+                            snprintf(full_command, sizeof(full_command), "%s", linux_cmd);
 
-                      system(full_command);
+                           system(full_command);
+                      }
+
                   }
                   else 
                   {
