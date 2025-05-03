@@ -8,12 +8,10 @@
 
 int main()
 {
-   if (chdir("root") != 0) 
-   {
-      perror("chdir failed");
-      return 1;
-   }
+   char root[PATH_LEN];
+   strcpy(root, "/home/omar-ayman/OS1-Project/root");
    
+   changeDirectory(root);
    
     CommandMap map[MAX_COMMANDS];
     int count = load_map(map, "../command_map.txt");
@@ -53,21 +51,6 @@ int main()
                   //printf("%s\n",inputPart1);
                   //printf("%s\n",inputPart2);
                   
-                  
-                  int spaceInInputSecondPartExists = 0;
-                  char *p = inputPart2;
-                  if (inputPart2)
-                  {
-                      while (*p)
-                      {
-                          if (*p == ' ')
-                          {
-                              spaceInInputSecondPartExists = 1;
-                              break;
-                          }
-                          p++;
-                      }
-                  }
    
                   char cmd[CMD_LEN]  ;
                   char args[ARG_LEN] ;
@@ -75,6 +58,21 @@ int main()
                   
                   if(inputPart2)
                   {
+                      int spaceInInputSecondPartExists = 0;
+                      char *p = inputPart2;
+                      if (inputPart2)
+                      {
+                          while (*p)
+                          {
+                              if (*p == ' ')
+                              {
+                                  spaceInInputSecondPartExists = 1;
+                                  break;
+                              }
+                              p++;
+                          }
+                      }
+                      
                       char *inputPart2_1 = NULL;
                       char *inputPart2_2 = NULL;
                       if(spaceInInputSecondPartExists == 1)
@@ -129,13 +127,17 @@ int main()
                   const char *linux_cmd = map_command(cmd, map, count);
                   if (linux_cmd) 
                   {
-                      if(strcmp(linux_cmd, "cd") == 0)
+                      if(strcmp(linux_cmd, "cd") == 0 || strcmp(linux_cmd, "cd ..") == 0)
                       {
-                         if (chdir(args) != 0) 
-                         {
-                            perror("chdir failed");
-                            return 1;
-                         }
+                          if(strcmp(linux_cmd, "cd") == 0)
+                             changeDirectory(args);
+                          else
+                          {
+                             char cwd[PATH_LEN];
+                             getcwd(cwd, sizeof(cwd));
+                             getParentDirectory(cwd);
+                             changeDirectory(cwd);
+                          } 
                       }
                       else
                       {
@@ -270,6 +272,26 @@ int isPartCmd(const char *inputPart, CommandMap map[], int count)
     
     return 0;
 
+}
+
+// Change directory
+void changeDirectory(const char *path)
+{
+     if (chdir(path) != 0) 
+     {
+        perror("chdir failed");
+        exit(1);
+     }
+}
+
+// get parent directory
+void getParentDirectory(char *path)
+{
+    char *last_slash = strrchr(path, '/');
+    if(last_slash != NULL)
+    {
+        *last_slash = '\0';
+    }
 }
 
 

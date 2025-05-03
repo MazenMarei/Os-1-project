@@ -2,6 +2,7 @@
 #define MAX_COMMANDS 100
 #define CMD_LEN 100
 #define ARG_LEN 200
+#define PATH_LEN 200
 
 typedef struct 
 {
@@ -23,6 +24,12 @@ const char* map_command(const char *input, CommandMap map[], int count);
 
 // Is a part cmd?
 int isPartCmd(const char *inputPart2, CommandMap map[], int count);
+
+// Change Directory
+void changeDirectory(const char *path);
+
+// get parent directory
+void getParentDirectory(char *path);
 
 // Show Manual
 void show_manual(const char *task_name);
