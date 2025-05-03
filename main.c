@@ -116,7 +116,7 @@ int main()
                           else
                           {
                               snprintf(cmd, CMD_LEN, "%s", inputPart1);
-                              strcpy(args, inputPart2_2);
+                              strcpy(args, inputPart2);
                               doArgsExist = 1;
                           }
                       }

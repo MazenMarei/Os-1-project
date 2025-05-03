@@ -1,4 +1,5 @@
 cd=pwd
+chdir=cd
 dir=ls
 del=rm
 copy=cp
