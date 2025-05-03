@@ -21,5 +21,8 @@ int load_map(CommandMap map[], const char *filename);
 // Map Command
 const char* map_command(const char *input, CommandMap map[], int count);
 
+// Is a part cmd?
+int isPartCmd(const char *inputPart2, CommandMap map[], int count);
+
 // Show Manual
 void show_manual(const char *task_name);
