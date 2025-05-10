@@ -86,9 +86,8 @@ int main()
                           }
                           else
                           {
-                              strcpy(args, inputPart2_2);
+                              strcpy(cmd, inputPart1);
                               snprintf(args, ARG_LEN, "%s %s", inputPart2_1, inputPart2_2);
-                              snprintf(cmd, CMD_LEN, "%s", inputPart1);
                               doArgsExist = 1;
                           }
 
