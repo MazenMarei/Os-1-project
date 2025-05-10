@@ -1,0 +1,67 @@
+/*
+You can type here any CSS rule recognized by GTK.
+You can temporarily disable this custom CSS by clicking on the “Pause” button above.
+
+Changes are applied instantly and globally, for the whole application.
+*/
+
+window {
+	background-color:transparent;
+    font-family: 'monospace', sans-serif;
+    font-size: 16px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+
+
+}
+
+
+box.container {
+	background-color: #182225;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    padding: 16px;
+
+}
+
+label.headerTitle {
+    color: #00bd72;
+    font-weight: 800;
+    font-size: 20px;
+}
+
+.settingBtn , .EnterBtn {
+	background:transparent;
+	border:none;
+	color:#b6ad92;
+	transition: all 0.3s ease-in;
+	margin-left:40px;
+
+}
+.settingBtn:hover , .EnterBtn:hover {
+	background:#F5DEB3;
+	color: #000000;
+
+}
+
+.settingBtn:active , .EnterBtn:active {
+	transform:scale(0.95);
+
+}
+
+.cmdText {
+	background-color:transparent;
+	border: 1px solid #415258;
+	border-radius: 5px;
+	padding: 15px;
+	color: white;
+    font-weight: 400;
+}
+
+.cmdInput {
+	background-color:#212C30;
+	color: #B8AF94;
+	padding: 5px;
+	padding-left: 15px;
+
+}
