@@ -26,6 +26,7 @@ int main()
         {
             system("clear");
             show_menu();
+            
             fgets(choice, sizeof(choice), stdin);
             choice[strcspn(choice, "\n")] = 0;
 
@@ -35,6 +36,7 @@ int main()
                 while(1)
                 {
                   printf("DOSComnand$ ");
+                  
                   fgets(input, sizeof(input), stdin);
                   input[strcspn(input, "\n")] = 0;
                   
@@ -47,10 +49,6 @@ int main()
                   // Split command and arguments
                   char *inputPart1 = strtok(input, " ");
                   char *inputPart2 = strtok(NULL, "");
-                  
-                  //printf("%s\n",inputPart1);
-                  //printf("%s\n",inputPart2);
-                  
    
                   char cmd[CMD_LEN]  ;
                   char args[ARG_LEN] ;
@@ -80,17 +78,11 @@ int main()
                           inputPart2_1 = strtok(inputPart2, " ");
                           inputPart2_2 = strtok(NULL, "");
                           
-                          //printf("%s\n",inputPart2_1);
-                          //printf("%s\n",inputPart2_2);
-                          
                           if(isPartCmd(inputPart2_1, map, count))
                           {
                               strcpy(args, inputPart2_2);
                               snprintf(cmd, CMD_LEN, "%s %s", inputPart1,inputPart2_1);
                               doArgsExist = 1;
-                              
-                              //printf("%s ",args);
-                              //printf("%s\n",cmd);
                           }
                           else
                           {
@@ -98,10 +90,6 @@ int main()
                               snprintf(args, ARG_LEN, "%s %s", inputPart2_1, inputPart2_2);
                               snprintf(cmd, CMD_LEN, "%s", inputPart1);
                               doArgsExist = 1;
-                              
-                              //printf("%s\n",cmd);
-                              //printf("%s\n",args);
-                             
                           }
 
                       }
