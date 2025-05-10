@@ -47,12 +47,12 @@ int main()
                   }
 
                   // Split command and arguments
-                  char *inputPart1 = strtok(input, " ");
-                  char *inputPart2 = strtok(NULL, "");
-   
                   char cmd[CMD_LEN]  ;
                   char args[ARG_LEN] ;
                   int doArgsExist = 0;
+                  
+                  char *inputPart1 = strtok(input, " ");
+                  char *inputPart2 = strtok(NULL, "");
                   
                   if(inputPart2)
                   {
