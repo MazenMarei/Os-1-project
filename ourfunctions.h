@@ -22,6 +22,12 @@ int load_map(CommandMap map[], const char *filename);
 // Map Command
 const char* map_command(const char *input, CommandMap map[], int count);
 
+// split into commands and arguments
+void splitIntoCommandsAndArguments(char* input, char *cmd, char *args, int *doArgsExist, CommandMap map[], int count);
+
+// run command
+void runCommand(const char *linux_cmd, int doArgsExist, char *args, char *cmd);
+
 // Is a part cmd?
 int isPartCmd(const char *inputPart2, CommandMap map[], int count);
 

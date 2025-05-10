@@ -1,6 +1,7 @@
 cd=pwd
 chdir=cd
 dir=ls
+dir /w=ls
 del=rm
 copy=cp
 type=cat

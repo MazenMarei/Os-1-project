@@ -20,7 +20,6 @@ int main()
 
     char choice[CMD_LEN];
     char input[CMD_LEN];
-    char full_command[CMD_LEN + ARG_LEN];
     
         while (1) 
         {
@@ -50,98 +49,10 @@ int main()
                   char cmd[CMD_LEN]  ;
                   char args[ARG_LEN] ;
                   int doArgsExist = 0;
+                  splitIntoCommandsAndArguments(input, cmd, args, &doArgsExist, map, count);
                   
-                  char *inputPart1 = strtok(input, " ");
-                  char *inputPart2 = strtok(NULL, "");
-                  
-                  if(inputPart2)
-                  {
-                      int spaceInInputSecondPartExists = 0;
-                      char *p = inputPart2;
-                      if (inputPart2)
-                      {
-                          while (*p)
-                          {
-                              if (*p == ' ')
-                              {
-                                  spaceInInputSecondPartExists = 1;
-                                  break;
-                              }
-                              p++;
-                          }
-                      }
-                      
-                      char *inputPart2_1 = NULL;
-                      char *inputPart2_2 = NULL;
-                      if(spaceInInputSecondPartExists == 1)
-                      {
-                          inputPart2_1 = strtok(inputPart2, " ");
-                          inputPart2_2 = strtok(NULL, "");
-                          
-                          if(isPartCmd(inputPart2_1, map, count))
-                          {
-                              strcpy(args, inputPart2_2);
-                              snprintf(cmd, CMD_LEN, "%s %s", inputPart1,inputPart2_1);
-                              doArgsExist = 1;
-                          }
-                          else
-                          {
-                              strcpy(cmd, inputPart1);
-                              snprintf(args, ARG_LEN, "%s %s", inputPart2_1, inputPart2_2);
-                              doArgsExist = 1;
-                          }
-
-                      }
-                      else
-                      {
-                          if (isPartCmd(inputPart2, map, count))
-                          {
-                              snprintf(cmd, CMD_LEN, "%s %s", inputPart1,inputPart2);
-                          }
-                          else
-                          {
-                              snprintf(cmd, CMD_LEN, "%s", inputPart1);
-                              strcpy(args, inputPart2);
-                              doArgsExist = 1;
-                          }
-                      }
-                  }
-                  else
-                  {
-                      strcpy(cmd, inputPart1);
-                  }
-
                   const char *linux_cmd = map_command(cmd, map, count);
-                  if (linux_cmd) 
-                  {
-                      if(strcmp(linux_cmd, "cd") == 0 || strcmp(linux_cmd, "cd ..") == 0)
-                      {
-                          if(strcmp(linux_cmd, "cd") == 0)
-                             changeDirectory(args);
-                          else
-                          {
-                             char cwd[PATH_LEN];
-                             getcwd(cwd, sizeof(cwd));
-                             getParentDirectory(cwd);
-                             changeDirectory(cwd);
-                          } 
-                      }
-                      else
-                      {
-                          if (doArgsExist)
-                            snprintf(full_command, sizeof(full_command), "%s %s", linux_cmd, args);
-                          else
-                            snprintf(full_command, sizeof(full_command), "%s", linux_cmd);
-
-                           system(full_command);
-                      }
-
-                  }
-                  else 
-                  {
-                      printf("Unrecognized DOS command: %s\n", cmd);
-                  }
-                  
+                  runCommand(linux_cmd, doArgsExist, args, cmd);
                 }
               
             }
@@ -242,6 +153,103 @@ const char* map_command(const char *input, CommandMap map[], int count)
     }
     return NULL;
 
+}
+
+void splitIntoCommandsAndArguments(char* input, char *cmd, char *args, int *doArgsExist, CommandMap map[], int count)
+{
+      char *inputPart1 = strtok(input, " ");
+      char *inputPart2 = strtok(NULL, "");
+      
+      if(inputPart2)
+      {
+          int spaceInInputSecondPartExists = 0;
+          char *p = inputPart2;
+          if (inputPart2)
+          {
+              while (*p)
+              {
+                  if (*p == ' ')
+                  {
+                      spaceInInputSecondPartExists = 1;
+                      break;
+                  }
+                  p++;
+              }
+          }
+          
+          if(spaceInInputSecondPartExists == 1)
+          {
+              char *inputPart2_1 = strtok(inputPart2, " ");
+              char *inputPart2_2 = strtok(NULL, "");
+              
+              if(isPartCmd(inputPart2_1, map, count))
+              {
+                  strcpy(args, inputPart2_2);
+                  snprintf(cmd, CMD_LEN, "%s %s", inputPart1,inputPart2_1);
+                  *doArgsExist = 1;
+              }
+              else
+              {
+                  strcpy(cmd, inputPart1);
+                  snprintf(args, ARG_LEN, "%s %s", inputPart2_1, inputPart2_2);
+                  *doArgsExist = 1;
+              }
+
+          }
+          else
+          {
+              if (isPartCmd(inputPart2, map, count))
+              {
+                  snprintf(cmd, CMD_LEN, "%s %s", inputPart1,inputPart2);
+              }
+              else
+              {
+                  snprintf(cmd, CMD_LEN, "%s", inputPart1);
+                  strcpy(args, inputPart2);
+                  *doArgsExist = 1;
+              }
+          }
+      }
+      else
+      {
+          strcpy(cmd, inputPart1);
+      } 
+}
+
+// Run Linux command
+void runCommand(const char *linux_cmd, int doArgsExist, char *args, char *cmd)
+{
+      char full_command[CMD_LEN + ARG_LEN];
+      
+      if (linux_cmd) 
+      {
+          if(strcmp(linux_cmd, "cd") == 0 || strcmp(linux_cmd, "cd ..") == 0)
+          {
+              if(strcmp(linux_cmd, "cd") == 0)
+                 changeDirectory(args);
+              else
+              {
+                 char cwd[PATH_LEN];
+                 getcwd(cwd, sizeof(cwd));
+                 getParentDirectory(cwd);
+                 changeDirectory(cwd);
+              } 
+          }
+          else
+          {
+              if (doArgsExist)
+                snprintf(full_command, sizeof(full_command), "%s %s", linux_cmd, args);
+              else
+                snprintf(full_command, sizeof(full_command), "%s", linux_cmd);
+
+               system(full_command);
+          }
+
+      }
+      else 
+      {
+          printf("Unrecognized DOS command: %s\n", cmd);
+      } 
 }
 
 
