@@ -61,7 +61,9 @@ int main()
                 system("clear");
                 while(1)
                 {
-                  printf("Enter task name (e.g., task4): ");
+                  show_manual();
+                  
+                  printf("\nGo Back To Main Menu: ");
                   fgets(input, sizeof(input), stdin);
                   input[strcspn(input, "\n")] = 0;
                   
@@ -70,8 +72,6 @@ int main()
                     system("clear");
                     break;
                   }
-                  
-                  show_manual(input);
                 }
                 
             }
@@ -102,7 +102,7 @@ void show_menu()
     printf("1. Enter DOS command\n");
     printf("2. Show manual (e.g., man task4)\n");
     printf("3. Exit\n\n");
-    printf("To view this menu again after choosing one of these, type the command eee\n\n");
+    printf("To view this menu again after choosing one of these, type the command \"eee\".\n\n");
     printf("Choose an option: ");
 }
 
@@ -291,19 +291,17 @@ void getParentDirectory(char *path)
 
 
 // Show Manual
-void show_manual(const char *task_name)
+void show_manual()
 {
-    char filename[CMD_LEN + 10];
-    snprintf(filename, sizeof(filename), "manual/%s.txt", task_name);
-    
-    FILE *f = fopen(filename, "r");
+
+    FILE *f = fopen("../manual.txt", "r");
     if (!f)
     {
-        printf("Manual page not found for %s\n", task_name);
+        printf("Manual page not found\n");
         return;
     }
 
-    printf("\n--- Manual for %s ---\n", task_name);
+    printf("--- Shell Simulation Manual ---\n");
     char line[200];
     while (fgets(line, sizeof(line), f))
     {

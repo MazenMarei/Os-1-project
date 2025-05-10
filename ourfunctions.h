@@ -38,4 +38,4 @@ void changeDirectory(const char *path);
 void getParentDirectory(char *path);
 
 // Show Manual
-void show_manual(const char *task_name);
+void show_manual();

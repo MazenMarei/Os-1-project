@@ -1,0 +1,32 @@
+Overview
+----------
+This project is a simple shell simulation written in C. Upon execution, the user is greeted
+with a user-friendly, text-based menu offering three options:
+    1. Shell Mode
+    2. Manual
+    3. Exit
+
+
+Menu Options
+------------
+1. Shell Mode
+    * Allows the user to enter DOS-like commands (e.g., dir, copy).
+    * The shell translates these commands into their Linux equivalents and executes them.
+    * The user remains in shell mode until they type the keyword "eee". This command exits shell mode and returns to the main menu.
+    
+2. Manual
+    * Displays helpful documentation or task-related information.
+    * Prompts the user to enter the task name (e.g., task4) to view its manual.
+    * As with shell mode, typing "eee" will return the user to the main menu.
+    
+3. Exit
+    * Ends the program cleanly.
+    
+
+Notes
+-----
+* Commands are mapped from a file (command_map.txt) that defines DOS-to-Linux command translations.
+* Invalid or unrecognized commands result in a friendly error message.
+* Spaces and arguments are supported (e.g., copy file1.txt dir/).
+    
+
