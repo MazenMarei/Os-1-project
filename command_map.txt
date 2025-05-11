@@ -1,0 +1,13 @@
+cd=pwd
+chdir=cd
+cd..=cd ..
+dir=ls -l
+dir /w=ls
+dir /a=ls -a
+del=rm
+copy=cp
+type=cat
+rename=mv
+move=mv
+md=mkdir
+rmdir=rmdir

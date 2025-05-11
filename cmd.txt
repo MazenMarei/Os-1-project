@@ -1,0 +1,3 @@
+sudo mv dosapp.1 /usr/share/man/man1/
+
+gcc pkg-config --cflags gtk4 -o DosAppGui main.c src/main.c pkg-config --libs gtk4
